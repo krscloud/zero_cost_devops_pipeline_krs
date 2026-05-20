@@ -26,3 +26,10 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-app:latest
+
+      - name: Trigger CD Deployment via Secure Webhook
+        run: |
+          curl -X POST \
+            -H "X-Hub-Signature-256: ${{ secrets.WEBHOOK_SECRET }}" \
+            -H "Content-Type: application/json" \
+            https://anything-semester-correct.ngrok-free.dev/hooks/deploy-app
