@@ -1,12 +1,12 @@
 ---
-- name: Deploy Automated Web Stack to Production (Multi-Node K3d Cluster)
+- name: Deploy Automated Web Stack to Production (Native K3s Host Cluster)
   hosts: localhost
   connection: local
   become: false
 
   tasks:
     - name: Apply Kubernetes Deployment and Service Manifests
-      shell: "kubectl apply -f k8s-app.yaml"
+      shell: "export KUBECONFIG=$HOME/.kube/config && kubectl apply -f k8s-app.yaml"
       register: k8s_apply_output
 
     - name: Show Kubernetes Deployment Output
@@ -14,4 +14,4 @@
         var: k8s_apply_output.stdout_lines
 
     - name: Force a rolling restart to pull the fresh image instantly
-      shell: "kubectl rollout restart deployment/krs-web-app"
+      shell: "export KUBECONFIG=$HOME/.kube/config && kubectl rollout restart deployment/krs-web-app"
