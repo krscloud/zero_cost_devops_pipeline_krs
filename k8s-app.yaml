@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: krs-web-app
+  labels:
+    app: krs-web-app
+spec:
+  replicas: 1  # Kept simple to respect your 1.5GB RAM constraint
+  selector:
+    matchLabels:
+      app: krs-web-app
+  template:
+    metadata:
+      labels:
+        app: krs-web-app
+    spec:
+      containers:
+      - name: web-app
+        image: docker.io/oraclekrscloud/devops-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+      imagePullSecrets:
+      - name: krs-registry-credentials
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: krs-web-service
+spec:
+  selector:
+    app: krs-web-app
+  ports:
+    - protocol: TCP
+      port: 80         # Internal cluster communication port
+      targetPort: 5000 # The port your app listens on inside the container
+      nodePort: 30080  # The exact port you will use to view the app on your host
+  type: NodePort       # Clean, lightweight networking without heavy load balancers

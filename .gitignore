@@ -1,2 +1,13 @@
 __pycache__/
 *.pyc
+# Ignore secure credentials and private tokens
+registries.yaml
+
+# Ignore local cluster binaries and configuration wreckage
+kubectl
+cluster.yaml
+flannel-conf.json
+hooks.json
+
+# Ignore temporary script states
+*.log

@@ -1,0 +1,27 @@
+---
+- name: Deploy Automated Web Stack Locally
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: Stop existing container if running
+      docker_container:
+        name: web-app-staging
+        state: absent
+
+    - name: Pull fresh image from Docker Hub
+      docker_image:
+        name: oraclekrscloud/devops-app
+        tag: latest
+        source: pull
+        force_source: true
+
+    - name: Start new container on port 5000
+      docker_container:
+        name: web-app-staging
+        image: oraclekrscloud/devops-app:latest
+        state: started
+        restart_policy: always
+        published_ports:
+          - "127.0.0.1:5000:5000" 
