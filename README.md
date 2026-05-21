@@ -1,6 +1,8 @@
 # Zero-Cost Automated Web Stack Pipeline (Native K3s & Ansible)
 
-A production-ready, $0-cost CI/CD deployment pipeline designed to containerize, test, and automatically deploy a web application onto a highly resource-constrained host environment.
+A production-ready, $0-cost CI/CD deployment pipeline designed to containerize,
+test, and automatically deploy a web application 
+onto a highly resource-constrained host environment.
 
 ##  The Architecture ($0 Ecosystem)
 
