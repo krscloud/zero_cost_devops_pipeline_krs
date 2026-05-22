@@ -27,20 +27,3 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-app:latest
           no-cache: true
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build-and-push
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      - name: SSH into Rocky Linux VM and Execute Playbook
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VM_HOST_IP }}
-          username: devopskrs
-          key: ${{ secrets.VM_SSH_KEY }}
-          script: |
-            cd /home/devopskrs/zero_cost_devops_pipeline_krs
-            ansible-playbook deploy-prod.yml
