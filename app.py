@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return """<h1> Testing the 3rd time, it better work
+    return """<h1> It's working,
 KRS First Ever DevOps Pipeline: Operational</h1><p>Triggered via GitHub Actions & Ansible.</p>"""
 
 if __name__ == '__main__':
