@@ -5,6 +5,10 @@
   become: false
 
   tasks:
+    - name: Pause to allow Docker Hub to index incoming image layers
+      ansible.builtin.pause:
+        seconds: 15
+
     - name: Apply Kubernetes Deployment and Service Manifests
       shell: "export KUBECONFIG=$HOME/.kube/config && kubectl apply -f k8s-app.yaml"
       register: k8s_apply_output
