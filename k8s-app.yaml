@@ -5,7 +5,7 @@ metadata:
   labels:
     app: krs-web-app
 spec:
-  replicas: 1  # Kept simple to respect your 1.5GB RAM constraint
+  replicas: 1
   selector:
     matchLabels:
       app: krs-web-app
@@ -13,6 +13,9 @@ spec:
     metadata:
       labels:
         app: krs-web-app
+      annotations:
+        # This tells Kubernetes to forcefully pull the fresh image tag on every rollout
+        rollout-timestamp: "${date}"
     spec:
       containers:
       - name: web-app
@@ -32,7 +35,7 @@ spec:
     app: krs-web-app
   ports:
     - protocol: TCP
-      port: 80         # Internal cluster communication port
-      targetPort: 5000 # The port your app listens on inside the container
-      nodePort: 30080  # The exact port you will use to view the app on your host
-  type: NodePort       # Clean, lightweight networking without heavy load balancers
+      port: 80
+      targetPort: 5000
+      nodePort: 30080
+  type: NodePort
